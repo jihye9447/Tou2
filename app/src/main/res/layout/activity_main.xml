@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tou.MainActivity"
+    android:background="@drawable/gradiant">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/logo"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name1"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:gravity="center_horizontal"
+            android:text="이름이 뭐에요?"
+            android:textColor="@color/colorWhite"
+            android:textSize="16dp"
+            android:layout_marginTop="250dp"
+            android:layout_marginBottom="22.24dp" />
+
+        <EditText
+            android:id="@+id/input_name"
+            android:layout_marginStart="42.20dp"
+            android:layout_marginEnd="42.20dp"
+            android:layout_width="239.67dp"
+            android:layout_height="37dp"
+            android:background="@drawable/edittextshape"
+            android:gravity="center_horizontal"
+            android:hint="이름을 입력하세요.|"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:paddingLeft="15dp"
+            android:textColor="@color/colorHint"
+            android:textSize="13dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="31dp"
+                android:layout_marginBottom="180dp">
+        <Button
+            android:id="@+id/button-reset"
+            android:layout_width="99.33dp"
+            android:layout_height="37dp"
+            android:layout_marginStart="53dp"
+            android:background="@drawable/buttonshape"
+            android:text="RESET"
+            android:textColor="@color/colorWhite"
+            android:textSize="13.33dp"
+            android:onClick="button_Reset" />
+
+        <Button
+            android:id="@+id/button-next"
+            android:layout_width="99.33dp"
+            android:layout_height="37dp"
+            android:layout_toRightOf="@+id/button-reset"
+            android:layout_marginStart="22dp"
+            android:background="@drawable/buttonshape"
+            android:text="NEXT"
+            android:textColor="@color/colorWhite"
+            android:textSize="13.33dp"
+            android:onClick="button_Next"/>
+
+    </RelativeLayout>
+
+    </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="111.12dp"
+        android:text="TOU"
+        android:textColor="@color/colorWhite"
+        android:textSize="13sp" />
+
+
+</RelativeLayout>
