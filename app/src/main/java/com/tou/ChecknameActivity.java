@@ -1,6 +1,7 @@
 package com.tou;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,33 +15,43 @@ import android.widget.Toast;
 
 public class ChecknameActivity extends AppCompatActivity{
 
-    TextView check_name;
+    TextView check_name, question;
     String user_name;
-    //Button button_r, button_n;
+    Typeface typeface1, typeface2;
+    Button button_r, button_n;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkname);
 
+        initView();
+        setTypeface();
+
+    }
+    public void initView(){
         check_name = findViewById(R.id.check_name);
+        question = findViewById(R.id.name1);
+
         Intent intent = getIntent();
         user_name = intent.getExtras().getString("username");
         Toast.makeText(getBaseContext(),user_name,Toast.LENGTH_LONG).show();
         check_name.setText(user_name);
 
-        //input_name.setText(String.valueOf(msg)+"님");
+        button_r = findViewById(R.id.button_reset);
+        button_r.setOnClickListener(onButtonClick);
+        button_n = findViewById(R.id.button_next);
+        button_n.setOnClickListener(onButtonClick);
+    }
 
+    public void setTypeface(){
+        typeface1 = Typeface.createFromAsset(getAssets(), "fonts/smr.ttf");
+        typeface2 = Typeface.createFromAsset(getAssets(),"fonts/jejug.ttf");
 
-        findViewById(R.id.button_reset).setOnClickListener(onButtonClick);
-        findViewById(R.id.button_next).setOnClickListener(onButtonClick);
-
-        //name1은 성동명조(smr)
-        //check_name은 제주고딕 빛 번짐
-        //btn_r, btn_n 제주고딕
-        //1.RESET 클릭하면 메인화면으로 돌아감.
-        //2.NEXT 버튼 클릭하면 생일입력화면으로 이동
-
+        button_n.setTypeface(typeface2);
+        button_r.setTypeface(typeface2);
+        check_name.setTypeface(typeface2);
+        question.setTypeface(typeface1);
     }
     Button.OnClickListener onButtonClick = new Button.OnClickListener(){
 
@@ -50,6 +61,7 @@ public class ChecknameActivity extends AppCompatActivity{
             if(R.id.button_next == view.getId()){
                 Toast.makeText(getApplicationContext(),"next버튼을 눌렀습니다.",Toast.LENGTH_LONG).show();
                 Intent intent1 = new Intent(getApplicationContext(),BirthdayActivity.class);
+                intent1.putExtra("username",user_name);
                 startActivity(intent1);
 
             }else if(R.id.button_reset == view.getId()){

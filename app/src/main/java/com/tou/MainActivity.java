@@ -1,11 +1,13 @@
 package com.tou;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -18,8 +20,10 @@ import java.util.Scanner;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     EditText input_name;
+    TextView title,question;
     Button btn_r;
     Button btn_n;
+    Typeface typeface1, typeface2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         showComponet();
+        setTypeface();
 
         //xml 이름 입력하는 창과 연결.
         //input_name = findViewById(R.id.input_name);
@@ -36,13 +41,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void showComponet() {
 
-        input_name = (EditText)findViewById(R.id.input_name);
-        btn_n = (Button)findViewById(R.id.button_next);
-        btn_r = (Button)findViewById(R.id.button_reset);
+        question = findViewById(R.id.name1);
+        input_name = findViewById(R.id.input_name);
+        btn_n = findViewById(R.id.button_next);
+        btn_r = findViewById(R.id.button_reset);
+        title = findViewById(R.id.logo_design);
 
         btn_n.setOnClickListener(this);
         btn_r.setOnClickListener(this);
+    }
 
+    public void setTypeface(){
+        typeface1 = Typeface.createFromAsset(getAssets(), "fonts/smr.ttf");
+        typeface2 = Typeface.createFromAsset(getAssets(),"fonts/jejug.ttf");
+
+        btn_n.setTypeface(typeface2);
+        btn_r.setTypeface(typeface2);
+        title.setTypeface(typeface2);
+        question.setTypeface(typeface1);
     }
 
     @Override

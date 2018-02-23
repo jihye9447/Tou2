@@ -19,7 +19,6 @@
         <activity android:name=".ChecknameActivity"></activity>
         <activity android:name=".BirthdayActivity"></activity>
         <activity android:name=".DatepickerActivity"></activity>
-        <activity android:name=".CheckbirthdayActivity"></activity>
         <activity android:name=".LastActivity"></activity>
 
     </application>

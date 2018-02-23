@@ -34,6 +34,8 @@
         android:gravity="center_horizontal"
         android:background="@drawable/checkedshape"
         android:textColor="@color/colorWhite"
+        android:shadowColor="@color/colorWhite"
+        android:shadowRadius="10"
         android:textSize="18.33dp" />
 
         <RelativeLayout
