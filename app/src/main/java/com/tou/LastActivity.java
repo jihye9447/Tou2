@@ -1,20 +1,15 @@
 package com.tou;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.view.View;
-import android.widget.Button;
-import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
+import com.google.gson.Gson;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,6 +25,8 @@ public class LastActivity extends AppCompatActivity {
     TextView text1, username, text2, hour, min, day, date, month, year;
     String user_name,date_time;
     Typeface font1,font2,font3,font4,font5;
+    SharedPreference sharedPreference=new SharedPreference();
+    UserData userData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +34,19 @@ public class LastActivity extends AppCompatActivity {
 
         initView();
         setTypeFace();
-
-        user_name = getIntent().getStringExtra("username");
+        getData();
         username.setText(user_name);
 
+    }
+    /**
+     * UserData를 디비에서 가져와서 세팅
+     * userName 과 birth 데이터를 가져올 수 있음
+     * 디비에 저장된 json 을 gson 을 통하여 UserData 클래스에 매핑**/
+    private void getData(){
+        String data = sharedPreference.getValue(this,"userData","");
+        Gson gson = new Gson();
+        userData = gson.fromJson(data,UserData.class);
+        user_name = userData.getName();
     }
 
     private void initView(){

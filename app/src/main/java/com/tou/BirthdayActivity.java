@@ -8,12 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.util.Date;
+import com.google.gson.Gson;
 
 /**
  * Created by Administrator on 2018-02-17.
@@ -27,6 +25,7 @@ public class BirthdayActivity extends AppCompatActivity {
     Button next,reset,birth_edit;
     Typeface typeface1, typeface2;
     int Birthyear, BirthMonth,Days;
+    SharedPreference sharedPreference=new SharedPreference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +71,7 @@ public class BirthdayActivity extends AppCompatActivity {
             }
             else if(R.id.button_next == view.getId()){
                 Intent intent = new Intent(getApplicationContext(),LastActivity.class);
-                intent.putExtra("username",user_name);
+                saveUserData();
                 Toast.makeText(getApplicationContext(),"next버튼을 눌렀습니다.",Toast.LENGTH_LONG).show();
                 startActivity(intent);
 
@@ -85,7 +84,16 @@ public class BirthdayActivity extends AppCompatActivity {
         }
 
     };
-
+    /**
+     * Gson 을 이용한 UserData 를  json 형태의 string 으로 변환하여 DB 에저장
+     * 로그인 완료처리 개념으로 isLogin 을 true 로 저장* -> 로딩액티비티에서 쓰임*/
+    private void saveUserData(){
+        UserData userData = new UserData(user_name,BirthMonth+"월"+Days+"일");
+        Gson gson  =new Gson();
+        String userString = gson.toJson(userData);
+        sharedPreference.put(this,"userData",userString);
+        sharedPreference.put(this,"isLogin",true);
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

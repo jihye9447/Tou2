@@ -31,16 +31,14 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="70dp" />
 
-            <TextView
+            <ImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:scaleX="2"
-                android:scaleY="2"
-                android:text=":"
-                android:textColor="@color/colorWhite"
-                android:textSize="80dp" />
+                android:src="@drawable/two_dot"
+                android:scaleX="0.5"
+                android:scaleY="0.5"/>
 
 
             <TextView
