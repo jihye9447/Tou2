@@ -45,7 +45,9 @@ public class LastActivity extends AppCompatActivity {
         String data = sharedPreference.getValue(this,"userData","");
         Gson gson = new Gson();
         userData = gson.fromJson(data,UserData.class);
-        user_name = userData.getName();
+        if (userData!=null){
+            user_name = userData.getName();
+        }
     }
 
     private void initView(){
