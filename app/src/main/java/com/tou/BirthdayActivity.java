@@ -92,6 +92,8 @@ public class BirthdayActivity extends AppCompatActivity {
         Gson gson  =new Gson();
         String userString = gson.toJson(userData);
         sharedPreference.put(this,"userData",userString);
+        //userString=sharedPreference.getValue(this,"userData","");
+        //Toast.makeText(getApplicationContext(),userString,Toast.LENGTH_LONG).show();
         sharedPreference.put(this,"isLogin",true);
     }
     @Override
@@ -104,7 +106,8 @@ public class BirthdayActivity extends AppCompatActivity {
             Birthyear = data.getIntExtra("year",0);
             BirthMonth = data.getIntExtra("month",0);
             Days = data.getIntExtra("days",0);
-            Toast.makeText(getBaseContext(),Birthyear + "년"+ BirthMonth + "월"+Days+"일",Toast.LENGTH_LONG).show();birth_edit.setBackground(null);
+            Toast.makeText(getBaseContext(),Birthyear + "년"+ BirthMonth + "월"+Days+"일",Toast.LENGTH_LONG).show();
+            birth_edit.setBackground(null);
             birth_edit.setTextColor(Color.WHITE);
             birth_edit.setGravity(Gravity.CENTER);
             birth_edit.setShadowLayer(10,0,0,Color.WHITE);

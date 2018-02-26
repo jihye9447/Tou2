@@ -14,11 +14,7 @@ public class UserData {
         this.birth = birth;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() {return name;}
 
-    public String getBirth() {
-        return birth;
-    }
+    public String getBirth() {return birth;}
 }

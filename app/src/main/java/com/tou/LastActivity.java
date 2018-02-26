@@ -36,7 +36,6 @@ public class LastActivity extends AppCompatActivity {
         setTypeFace();
         getData();
         username.setText(user_name);
-
     }
     /**
      * UserData를 디비에서 가져와서 세팅
