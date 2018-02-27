@@ -45,7 +45,6 @@ public class LoadingActivity extends AppCompatActivity implements Runnable {
      * **/
     @Override
     public void run() {
-
         if (getLogin()){
             goNext(LastActivity.class);
         } else {

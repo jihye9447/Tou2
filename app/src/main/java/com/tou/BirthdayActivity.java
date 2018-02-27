@@ -1,6 +1,7 @@
 package com.tou;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -25,6 +26,9 @@ public class BirthdayActivity extends AppCompatActivity {
     Button next,reset,birth_edit;
     Typeface typeface1, typeface2;
     int Birthyear, BirthMonth,Days;
+    int colorH;
+    Resources res;
+
     SharedPreference sharedPreference=new SharedPreference();
 
     @Override
@@ -58,6 +62,8 @@ public class BirthdayActivity extends AppCompatActivity {
         reset.setTypeface(typeface1);
         next.setTypeface(typeface1);
 
+        colorH = res.getColor(R.color.colorHint);
+
     }
     Button.OnClickListener dateButtonClick = new Button.OnClickListener(){
 
@@ -76,10 +82,14 @@ public class BirthdayActivity extends AppCompatActivity {
                 startActivity(intent);
 
             }else if(R.id.button_reset == view.getId()){
+
+                //Intent intent2 = new Intent(getApplicationContext(),ChecknameActivity.class);
+                Toast.makeText(getApplicationContext(),"reset버튼을 눌렀습니다",Toast.LENGTH_LONG).show();
+                //startActivity(intent2);
                 birth_edit.setBackgroundResource(R.drawable.edittextshape);
                 birth_edit.setText("생일을 입력하세요.|");
                 birth_edit.setShadowLayer(0,0,0,0);
-                birth_edit.setTextColor(Color.DKGRAY);
+                birth_edit.setTextColor(colorH);
             }
         }
 
