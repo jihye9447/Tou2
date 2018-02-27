@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
@@ -62,7 +63,7 @@ public class BirthdayActivity extends AppCompatActivity {
         reset.setTypeface(typeface1);
         next.setTypeface(typeface1);
 
-        colorH = res.getColor(R.color.colorHint);
+        colorH = ContextCompat.getColor(this,R.color.colorHint);
 
     }
     Button.OnClickListener dateButtonClick = new Button.OnClickListener(){

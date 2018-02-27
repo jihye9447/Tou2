@@ -10,12 +10,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.JsonObject;
-
-import org.json.JSONObject;
 
 import java.util.Date;
 
@@ -46,6 +46,8 @@ public class NotificationExampleActivity extends AppCompatActivity implements Vi
     TextView currentdate, celcious, content1, content2;
     Button button_exit;
     Typeface typeface1,typeface2, typeface3;
+    ImageView weatherIcon,icon;
+    ImageView background;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class NotificationExampleActivity extends AppCompatActivity implements Vi
 
         showComponet();
         setTypeface();
+        setIcon();
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_FINE_LOCATION  },
@@ -124,10 +127,20 @@ public class NotificationExampleActivity extends AppCompatActivity implements Vi
         content1 = findViewById(R.id.content_upper);
         content2 = findViewById(R.id.content_below);
         button_exit = findViewById(R.id.button_exit);
-
+        weatherIcon  = findViewById(R.id.weatherimage);
+        icon = findViewById(R.id.icon);
+        background = findViewById(R.id.backgroud);
         button_exit.setOnClickListener(this);
     }
 
+    private void setIcon(){
+        Glide.with(this).load(R.drawable.fillingicon)
+                .into(weatherIcon);
+        Glide.with(this).load(R.drawable.fillingicon)
+                .into(icon);
+        Glide.with(this).load(R.drawable.background1)
+                .into(background);
+    }
     public void setTypeface(){
         typeface1 = Typeface.createFromAsset(getAssets(), "fonts/smr.ttf");
         typeface2 = Typeface.createFromAsset(getAssets(),"fonts/jejug.ttf");

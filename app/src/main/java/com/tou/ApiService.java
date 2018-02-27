@@ -14,11 +14,15 @@ import retrofit2.http.Query;
 public interface ApiService {
     //베이스 URL
 
-    static final String BASEURL = "https://api2.sktelecom.com/weather/current/minutely/";
+    static final String BASEURL = "https://api2.sktelecom.com/";
     static final String APPKEY = "4d3e2ebd-4960-42e1-8740-471d14a1c233";
 
     @GET("weather/current/hourly")
     Call<JsonObject>getHourly(@Header("appKey")String appKey, @Query("version")int version, @Query("lat")double lat,
+                              @Query("lon")double lon);
+
+    @GET("weather/current/minutely")
+    Call<JsonObject>getMinutely(@Header("appKey")String appKey, @Query("version")int version, @Query("lat")double lat,
                               @Query("lon")double lon);
 
 
