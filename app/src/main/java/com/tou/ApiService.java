@@ -23,7 +23,7 @@ public interface ApiService {
 
     @GET("weather/current/minutely")
     Call<JsonObject>getMinutely(@Header("appKey")String appKey, @Query("version")int version, @Query("lat")double lat,
-                              @Query("lon")double lon);
+                                @Query("lon")double lon);
 
 
 }

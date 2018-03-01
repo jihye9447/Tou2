@@ -84,14 +84,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void exitButton(View view) {
-        if(R.id.button_exit == view.getId()){
-            //서비스-> 알람메니저 / 렌덤함수로 알람시간 지정(24시간 주기) / notification 띄우기 /
-            //날씨 데이터 업뎃 해서 / 생일 /생일 제외한 비오는날 / 비안오는날
-
-            Toast.makeText(getApplicationContext(),"종료",Toast.LENGTH_LONG).show();
-            //System.exit(0);
-        }
-    }
 }
 

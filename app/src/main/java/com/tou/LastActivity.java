@@ -1,19 +1,29 @@
 package com.tou;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.tou.utils.LockScreen;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -23,10 +33,13 @@ import java.util.Locale;
 
 public class LastActivity extends AppCompatActivity {
 
+    //Notification push alarm
+    //private static int ONE_MINUTE=5626;
 
     //TextView textView;
+    View view;
     TextView text1, username, text2, hour, min, day, date, month, year;
-    String user_name,date_time;
+    String user_name,date_time, user_birth;
     Typeface font1,font2,font3,font4,font5;
     SharedPreference sharedPreference=new SharedPreference();
     UserData userData;
@@ -41,10 +54,48 @@ public class LastActivity extends AppCompatActivity {
         getData();
         username.setText(user_name);
 
-        Intent intent = new Intent(this,NotificationExampleActivity.class);
-        startActivity(intent);
+        //sendNotification();
+
+        //Intent intent = new Intent(this,NotificationExampleActivity.class);
+        //startActivity(intent);
+
+        //new AlarmHATT(getApplicationContext()).Alarm();
 
     }
+
+//    public class AlarmHATT {
+//
+//        private Context context;
+//        public AlarmHATT(Context context){
+//            this.context = context;
+//        }
+//        public void Alarm(){
+//            AlarmManager am = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
+//            Intent intent;
+//            intent = new Intent(LastActivity.this, 어떤 스크린 띄울지);
+//
+//            PendingIntent sender = PendingIntent.getBroadcast(LastActivity.this,0,intent,0);
+//
+//            //birthday 알람시간 지정하기
+//            SimpleDateFormat birth_alarm = new SimpleDateFormat("MMMM dd yyyy", Locale.ENGLISH);
+//            try {
+//                Date date = birth_alarm.parse(user_birth);
+//                Calendar calendar = Calendar.getInstance();
+//                calendar.setTime(date);
+//
+//                //알람시간 calendar에 set해주기
+//                //calendar.set(2018,02,28,20,45,05);
+//                //calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE),40,0);
+//
+//                //알람예약
+//                am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+//    }
+
 
 
     /**
@@ -57,6 +108,7 @@ public class LastActivity extends AppCompatActivity {
         userData = gson.fromJson(data,UserData.class);
         if (userData!=null){
             user_name = userData.getName();
+            user_birth = userData.getBirth();
         }
     }
 
@@ -77,6 +129,9 @@ public class LastActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        LockScreen.getInstance().init(this,true);
+        LockScreen.getInstance().active();
     }
 
     private void Formatterclass() throws ParseException {
@@ -166,6 +221,52 @@ public class LastActivity extends AppCompatActivity {
         }
 
         return str;
+    }
+
+//    public void sendNotification(){
+//
+//
+//        Intent intent = new Intent(this,NotificationExampleActivity.class);
+//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+//        stackBuilder.addParentStack(NotificationExampleActivity.class);
+//        stackBuilder.addNextIntent(intent);
+//
+//        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        NotificationCompat.Builder mBuilder =
+//                new NotificationCompat.Builder(this);
+//
+//
+//        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        mBuilder.setContentIntent(pendingIntent);
+//        mBuilder.setContentIntent(pendingIntent);
+//        mBuilder.setSmallIcon(R.drawable.fillingicon);
+//        mBuilder.setContentTitle(title1+"/"+title2);
+//        mBuilder.setContentText(content1 + "\n" + content2);
+//
+//        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//        notificationManager.notify(365, mBuilder.build());
+//    }
+
+    public void exitButton(View view) {
+        if(R.id.button_exit == view.getId()){
+            //서비스-> 알람메니저 / 렌덤함수로 알람시간 지정(24시간 주기) / notification 띄우기 /
+            //날씨 데이터 업뎃 해서 / 생일 /생일 제외한 비오는날 / 비안오는날
+
+            Toast.makeText(getApplicationContext(),"종료",Toast.LENGTH_LONG).show();
+            finish();
+            System.exit(0);
+
+            //LockScreen 활성화 시키기
+
+
+            //Intent intent = new Intent(getApplicationContext(),NotificationExampleActivity.class);
+            //NotiService 호출하기 위한 준비
+            //NotiScreenService notiScreenService = new NotiScreenService();
+            //notiScreenService.startService(intent);
+
+        }
     }
 
 }

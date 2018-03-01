@@ -8,7 +8,10 @@ import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
+import android.view.Menu;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,7 +32,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Administrator on 2018-02-27.
  */
 
-public class NotificationExampleActivity extends AppCompatActivity implements View.OnClickListener{
+public class NotificationExampleActivity extends AppCompatActivity {
+
 
     //GPSTracker
     GPSTracker gps = null;
@@ -44,7 +48,7 @@ public class NotificationExampleActivity extends AppCompatActivity implements Vi
 
     //
     TextView currentdate, celcious, content1, content2;
-    Button button_exit;
+    TextView button_exit;
     Typeface typeface1,typeface2, typeface3;
     ImageView weatherIcon,icon;
     ImageView background;
@@ -52,6 +56,7 @@ public class NotificationExampleActivity extends AppCompatActivity implements Vi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED|WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         setContentView(R.layout.activity_notificationexample);
 
         showComponet();
@@ -76,9 +81,27 @@ public class NotificationExampleActivity extends AppCompatActivity implements Vi
         };
 
         GPSEvent();
-        Toast.makeText(this, latitude+"+"+longitude, Toast.LENGTH_SHORT).show();
+
+        //Toast.makeText(this, latitude+"+"+longitude, Toast.LENGTH_SHORT).show();
         getWeather(latitude, longitude);
 
+        UnlockBar unlock = findViewById(R.id.unlock);
+
+        unlock.setOnUnlockListenerRight(new UnlockBar.OnUnlockListener() {
+            @Override
+            public void onUnlock() {
+                Toast.makeText(NotificationExampleActivity.this, "Right Action", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
+        unlock.setOnUnlockListenerLeft(new UnlockBar.OnUnlockListener() {
+            @Override
+            public void onUnlock() {
+                Toast.makeText(NotificationExampleActivity.this, "left Action", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
 
     }
 
@@ -130,13 +153,13 @@ public class NotificationExampleActivity extends AppCompatActivity implements Vi
         weatherIcon  = findViewById(R.id.weatherimage);
         icon = findViewById(R.id.icon);
         background = findViewById(R.id.backgroud);
-        button_exit.setOnClickListener(this);
+        //button_exit.setOnClickListener(this);
     }
 
     private void setIcon(){
         Glide.with(this).load(R.drawable.fillingicon)
                 .into(weatherIcon);
-        Glide.with(this).load(R.drawable.fillingicon)
+        Glide.with(this).load(R.drawable.fillingicon)//날씨 정보에 맞는 날씨 이미지 넣어야 함.
                 .into(icon);
         Glide.with(this).load(R.drawable.background1)
                 .into(background);
@@ -155,12 +178,47 @@ public class NotificationExampleActivity extends AppCompatActivity implements Vi
     }
 
     //화면종료 event
+//    @Override
+//    public void onClick(View view) {
+//        if(view == button_exit){
+//            Toast.makeText(this, "화면을 종료합니다.", Toast.LENGTH_SHORT).show();
+//            System.exit(0);
+//        }
+//    }
+
     @Override
-    public void onClick(View view) {
-        if(view == button_exit){
-            Toast.makeText(this, "화면을 종료합니다.", Toast.LENGTH_SHORT).show();
-            System.exit(0);
-        }
+    public void onAttachedToWindow() {
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON|
+                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD|
+//                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON|
+                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        super.onAttachedToWindow();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((LockApplication) getApplication()).lockScreenShow = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ((LockApplication) getApplication()).lockScreenShow = false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return false;
     }
 
     //날씨 정보 받아오는 코드
@@ -168,7 +226,7 @@ public class NotificationExampleActivity extends AppCompatActivity implements Vi
         Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(ApiService.BASEURL).build();
         ApiService apiService = retrofit.create(ApiService.class);
-        Call<JsonObject> call = apiService.getHourly(ApiService.APPKEY,1,latitude,longtitude);
+        Call<JsonObject> call = apiService.getMinutely(ApiService.APPKEY,1,latitude,longtitude);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

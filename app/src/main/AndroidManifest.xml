@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:allowBackup="true"
@@ -17,7 +19,11 @@
         <activity android:name=".BirthdayActivity"></activity>
         <activity android:name=".DatepickerActivity"></activity>
         <activity android:name=".LastActivity"></activity>
-        <activity android:name=".NotificationExampleActivity"/>
+        <activity
+            android:name=".NotificationExampleActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <!--로딩페이지-->
         <activity android:name=".LoadingActivity">
             <intent-filter>
@@ -26,10 +32,5 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-
 </manifest>
