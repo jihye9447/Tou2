@@ -39,6 +39,7 @@ public class LoadingActivity extends AppCompatActivity implements Runnable {
         Toast.makeText(this,target.getName(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this,target);
         startActivity(intent);
+        finish();
     }
 
     /**

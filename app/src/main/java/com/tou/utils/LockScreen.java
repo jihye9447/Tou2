@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.provider.Settings;
 
-import com.tou.NotificationExampleActivity;
-
 /**
  * Created by Administrator on 2018-03-01.
  */
@@ -50,18 +48,18 @@ public class LockScreen {
         }
 
         if(context!=null) {
-            context.startService(new Intent(context, NotificationExampleActivity.class));
+            context.startService(new Intent(context, LockscreenService.class));
         }
     }
 
     public void deactivate(){
         if(context!=null) {
-            context.stopService(new Intent(context, NotificationExampleActivity.class));
+            context.stopService(new Intent(context, LockscreenService.class));
         }
     }
     public boolean isActive(){
         if(context!=null) {
-            return isMyServiceRunning(NotificationExampleActivity.class);
+            return isMyServiceRunning(LockscreenService.class);
         }else{
             return false;
         }

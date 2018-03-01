@@ -1,16 +1,8 @@
 package com.tou;
 
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -23,7 +15,6 @@ import com.tou.utils.LockScreen;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -56,8 +47,8 @@ public class LastActivity extends AppCompatActivity {
 
         //sendNotification();
 
-        //Intent intent = new Intent(this,NotificationExampleActivity.class);
-        //startActivity(intent);
+//        Intent intent = new Intent(this,NotificationExampleActivity.class);
+//        startActivity(intent);
 
         //new AlarmHATT(getApplicationContext()).Alarm();
 
@@ -255,8 +246,8 @@ public class LastActivity extends AppCompatActivity {
             //날씨 데이터 업뎃 해서 / 생일 /생일 제외한 비오는날 / 비안오는날
 
             Toast.makeText(getApplicationContext(),"종료",Toast.LENGTH_LONG).show();
+            LockScreen.getInstance().active();
             finish();
-            System.exit(0);
 
             //LockScreen 활성화 시키기
 

@@ -8,11 +8,9 @@ import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
 import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,7 +49,7 @@ public class NotificationExampleActivity extends AppCompatActivity {
     TextView button_exit;
     Typeface typeface1,typeface2, typeface3;
     ImageView weatherIcon,icon;
-    ImageView background;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,10 +147,10 @@ public class NotificationExampleActivity extends AppCompatActivity {
         celcious = findViewById(R.id.celcious);
         content1 = findViewById(R.id.content_upper);
         content2 = findViewById(R.id.content_below);
-        button_exit = findViewById(R.id.button_exit);
+       // button_exit = findViewById(R.id.button_exit);
         weatherIcon  = findViewById(R.id.weatherimage);
         icon = findViewById(R.id.icon);
-        background = findViewById(R.id.backgroud);
+
         //button_exit.setOnClickListener(this);
     }
 
@@ -161,15 +159,14 @@ public class NotificationExampleActivity extends AppCompatActivity {
                 .into(weatherIcon);
         Glide.with(this).load(R.drawable.fillingicon)//날씨 정보에 맞는 날씨 이미지 넣어야 함.
                 .into(icon);
-        Glide.with(this).load(R.drawable.background1)
-                .into(background);
+
     }
     public void setTypeface(){
         typeface1 = Typeface.createFromAsset(getAssets(), "fonts/smr.ttf");
         typeface2 = Typeface.createFromAsset(getAssets(),"fonts/jejug.ttf");
         typeface3 = Typeface.createFromAsset(getAssets(),"fonts/nanumg.ttf");
 
-        button_exit.setTypeface(typeface3);
+//        button_exit.setTypeface(typeface3);
         currentdate.setTypeface(typeface2);
         celcious.setTypeface(typeface2);
         content1.setTypeface(typeface1);
