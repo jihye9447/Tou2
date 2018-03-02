@@ -8,13 +8,21 @@ package com.tou;
 public class UserData {
     private String name;
     private String birth;
+    private long startDate;
 
-    public UserData(String name, String birth) {
+    public UserData(String name, String birth, long startDate) {
         this.name = name;
         this.birth = birth;
+        this.startDate = startDate;
     }
 
     public String getName() {return name;}
 
     public String getBirth() {return birth;}
+
+    public long getStartDate() {
+        return startDate;
+    }
+
+
 }

@@ -16,6 +16,11 @@ import com.tou.LockApplication;
 import com.tou.MainActivity;
 import com.tou.NotificationExampleActivity;
 import com.tou.R;
+import com.tou.SharedPreference;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Administrator on 2018-03-01.
@@ -26,15 +31,34 @@ public class LockscreenService extends Service{
     private final String TAG = "LockscreenService";
     private int mServiceStartId = 0;
     private Context mContext = null;
-
+    int count=0;
+    SharedPreference sharedPreference = new SharedPreference();
     private NotificationManager mNM;
+
 
     private BroadcastReceiver mLockscreenReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (null != context) {
+
                 if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-                    startLockscreenActivity();
+                    //날짜가 하루 지났을때 count를 0으로
+                    if (count==0){
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM", Locale.ENGLISH);
+                        Date date = new Date();
+                        String today = formatter.format(date);
+                        String yesterDay = sharedPreference.getValue(context,"today","");
+                        if (!yesterDay.equals(today)){
+                            sharedPreference.put(context,"today",today);
+                            count=0;
+                        }
+                    }
+                    count++;
+                    if (count==5){
+                        startLockscreenActivity();
+                    }
+                    Log.d("test123","컷다켜진 횟수 : "+count);
+
                 }
             }
         }

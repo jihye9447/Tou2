@@ -1,6 +1,7 @@
 package com.tou;
 
 import com.google.gson.JsonObject;
+import com.tou.weahter.MinutelyWeather;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -22,8 +23,8 @@ public interface ApiService {
                               @Query("lon")double lon);
 
     @GET("weather/current/minutely")
-    Call<JsonObject>getMinutely(@Header("appKey")String appKey, @Query("version")int version, @Query("lat")double lat,
-                                @Query("lon")double lon);
+    Call<MinutelyWeather>getMinutely(@Header("appKey")String appKey, @Query("version")int version, @Query("lat")double lat,
+                                     @Query("lon")double lon);
 
 
 }

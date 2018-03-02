@@ -1,8 +1,5 @@
 package com.tou;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -17,8 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-
-import java.util.Calendar;
 
 /**
  * Created by Administrator on 2018-02-17.
@@ -41,7 +36,7 @@ public class BirthdayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_birthday);
-
+        LockApplication.activities.add(this);
         user_name = getIntent().getStringExtra("username");
 
         initView();
@@ -86,12 +81,14 @@ public class BirthdayActivity extends AppCompatActivity {
                 saveUserData();
                 Toast.makeText(getApplicationContext(),"next버튼을 눌렀습니다.",Toast.LENGTH_LONG).show();
                 startActivity(intent);
+                for (AppCompatActivity activity : LockApplication.activities){
+                    activity.finish();
+                    LockApplication.activities.clear();
+                }
 
             }else if(R.id.button_reset == view.getId()){
 
-                //Intent intent2 = new Intent(getApplicationContext(),ChecknameActivity.class);
                 Toast.makeText(getApplicationContext(),"reset버튼을 눌렀습니다",Toast.LENGTH_LONG).show();
-                //startActivity(intent2);
                 birth_edit.setBackgroundResource(R.drawable.edittextshape);
                 birth_edit.setText("생일을 입력하세요.|");
                 birth_edit.setShadowLayer(0,0,0,0);
@@ -104,12 +101,10 @@ public class BirthdayActivity extends AppCompatActivity {
      * Gson 을 이용한 UserData 를  json 형태의 string 으로 변환하여 DB 에저장
      * 로그인 완료처리 개념으로 isLogin 을 true 로 저장* -> 로딩액티비티에서 쓰임*/
     private void saveUserData(){
-        UserData userData = new UserData(user_name,BirthMonth+"월"+Days+"일");
+        UserData userData = new UserData(user_name,BirthMonth+"월"+Days+"일",System.currentTimeMillis());
         Gson gson  =new Gson();
         String userString = gson.toJson(userData);
         sharedPreference.put(this,"userData",userString);
-        //userString=sharedPreference.getValue(this,"userData","");
-        //Toast.makeText(getApplicationContext(),userString,Toast.LENGTH_LONG).show();
         sharedPreference.put(this,"isLogin",true);
     }
     @Override

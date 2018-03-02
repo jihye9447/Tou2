@@ -47,8 +47,9 @@
 
                 <ImageView
                     android:id="@+id/weatherimage"
-                    android:layout_width="match_parent"
+                    android:layout_width="75dp"
                     android:layout_height="75dp"
+                    android:scaleType="centerInside"
                     android:layout_gravity="center_horizontal"
                     tools:src="@drawable/fillingicon" />
 

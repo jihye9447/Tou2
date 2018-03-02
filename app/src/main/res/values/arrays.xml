@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer-array name="rainIcon">
-        <item>@drawable/arrow_right</item>
-        <item>@drawable/arrow_right</item>
-        <item>@drawable/arrow_right</item>
-        <item>@drawable/arrow_right</item>
+        <item>@drawable/rain_1</item>
+        <item>@drawable/rain_2</item>
 
     </integer-array>
+    <integer-array name="randomBack">
+        <item>@drawable/ran_1</item>
+        <item>@drawable/ran_2</item>
+        <item>@drawable/ran_3</item>
+        <item>@drawable/ran_4</item>
+        <item>@drawable/ran_7</item>
+        <item>@drawable/ran_8</item>
+        <item>@drawable/ran_9</item>
+        <item>@drawable/ran_10</item>
+        <item>@drawable/ran_11</item>
+        <item>@drawable/ran_12</item>
+        <item>@drawable/ran_13</item>
+        <item>@drawable/ran_14</item>
+        <item>@drawable/ran_15</item>
+
+    </integer-array>
+
 </resources>

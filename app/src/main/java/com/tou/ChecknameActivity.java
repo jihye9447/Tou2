@@ -24,7 +24,7 @@ public class ChecknameActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkname);
-
+        LockApplication.activities.add(this);
         initView();
         setTypeface();
 
@@ -60,15 +60,12 @@ public class ChecknameActivity extends AppCompatActivity{
 
             if(R.id.button_next == view.getId()){
                 Toast.makeText(getApplicationContext(),"next버튼을 눌렀습니다.",Toast.LENGTH_LONG).show();
-                Intent intent1 = new Intent(getApplicationContext(),BirthdayActivity.class);
-                intent1.putExtra("username",user_name);
-                startActivity(intent1);
+                Intent intent = new Intent(getApplicationContext(),BirthdayActivity.class);
+                intent.putExtra("username",user_name);
+                startActivity(intent);
 
             }else if(R.id.button_reset == view.getId()){
-                Toast.makeText(getApplicationContext(),"reset버튼을 눌렀습니다",Toast.LENGTH_LONG).show();
-                Intent intent2 = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent2);
-
+                finish();
             }
 
         }

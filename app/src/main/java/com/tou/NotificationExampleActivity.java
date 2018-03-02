@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.JsonObject;
+import com.tou.weahter.MinutelyWeather;
 
 import java.util.Date;
 
@@ -49,8 +50,7 @@ public class NotificationExampleActivity extends AppCompatActivity {
     TextView button_exit;
     Typeface typeface1,typeface2, typeface3;
     ImageView weatherIcon,icon;
-
-
+    UnlockBar unlock;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +83,7 @@ public class NotificationExampleActivity extends AppCompatActivity {
         //Toast.makeText(this, latitude+"+"+longitude, Toast.LENGTH_SHORT).show();
         getWeather(latitude, longitude);
 
-        UnlockBar unlock = findViewById(R.id.unlock);
+        unlock = findViewById(R.id.unlock);
 
         unlock.setOnUnlockListenerRight(new UnlockBar.OnUnlockListener() {
             @Override
@@ -182,7 +182,38 @@ public class NotificationExampleActivity extends AppCompatActivity {
 //            System.exit(0);
 //        }
 //    }
+    private void setWeatherIcon(String skycode){
 
+        if(skycode.equals("SKY_A01")){
+            setImage(R.drawable.day);
+        }else if(skycode.equals("SKY_A02")){
+            setImage(R.drawable.cloudy_day_3);
+        }else if(skycode.equals("SKY_A03") || skycode.equals("SKY_A07")){
+            setImage(R.drawable.cloudy);
+        }else if(skycode.equals("SKY_A04") || skycode.equals("SKY_A08")){
+            setImage(R.drawable.rainy_4);
+        }else if(skycode.equals("SKY_A05") || skycode.equals("SKY_A09")){
+            setImage(R.drawable.snowy_5);
+        }else if(skycode.equals("SKY_A06") || skycode.equals("SKY_A10")){
+            //두개 띄울 수 있나?
+            setImage(R.drawable.rainy_4);
+        }else if(skycode.equals("SKY_A11")){
+            setImage(R.drawable.thunder);
+        }else if(skycode.equals("SKY_A12")){
+            //thunder, rainy
+            setImage(R.drawable.rainy_4);
+        }else if(skycode.equals("SKY_A13")){
+            //thunder, snowy-5
+            setImage(R.drawable.snowy_5);
+        }else if(skycode.equals("SKY_A14")){
+            setImage(R.drawable.thunder);
+            //vector rainy,snowy-5,thuder
+        }
+    }
+
+    private void setImage(int resource){
+        Glide.with(this).load(resource).into(weatherIcon);
+    }
     @Override
     public void onAttachedToWindow() {
 
@@ -223,25 +254,31 @@ public class NotificationExampleActivity extends AppCompatActivity {
         Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(ApiService.BASEURL).build();
         ApiService apiService = retrofit.create(ApiService.class);
-        Call<JsonObject> call = apiService.getMinutely(ApiService.APPKEY,1,latitude,longtitude);
-        call.enqueue(new Callback<JsonObject>() {
+        Call<MinutelyWeather> call = apiService.getMinutely(ApiService.APPKEY,1,latitude,longtitude);
+        call.enqueue(new Callback<MinutelyWeather>() {
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+            public void onResponse(Call<MinutelyWeather> call, Response<MinutelyWeather> response) {
 
                 if(response.isSuccessful()){
                     //날씨데이터를 받아옴
-                    JsonObject object = response.body();
+                    MinutelyWeather object = response.body();
+                    String skyCode = object.getWeather().getMinutely().get(0).getSky().getCode();
+                    String temper = object.getWeather().getMinutely().get(0).getTemperature().getTc();
+                    Log.d("test123123",response.body().toString());
                     if(object!=null){
                         //데이터가 null이 아니면 날씨 데이터 텍스트 뷰로 보여주기
-                        content1.setText(object.toString());
+                        content1.setText(skyCode);
+                        setWeatherIcon(skyCode);
+                        unlock.setBackground(skyCode);
                     }
                 }
+
 
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-
+            public void onFailure(Call<MinutelyWeather> call, Throwable t) {
+                Log.d("test123",t.getLocalizedMessage()+",");
             }
         });
 

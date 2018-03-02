@@ -1,8 +1,11 @@
 package com.tou;
 
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -246,8 +249,14 @@ public class LastActivity extends AppCompatActivity {
             //날씨 데이터 업뎃 해서 / 생일 /생일 제외한 비오는날 / 비안오는날
 
             Toast.makeText(getApplicationContext(),"종료",Toast.LENGTH_LONG).show();
-            LockScreen.getInstance().active();
-            finish();
+
+            if ( Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+                LockScreen.getInstance().active();
+                finish();
+            } else {
+
+            }
+
 
             //LockScreen 활성화 시키기
 
